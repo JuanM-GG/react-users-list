@@ -24,9 +24,9 @@ const NameDivStyle = styled.div`
 `;
 
 const UserRow = ({ name, active, role }) => {
-	const [activeState, setActiveState] = useState(active);
+	const [isActive, setIsActive] = useState(active);
 	const handleState = () => {
-		setActiveState(!activeState);
+		setIsActive(!isActive);
 	};
 
 	return (
@@ -34,9 +34,9 @@ const UserRow = ({ name, active, role }) => {
 			<NameDivStyle>
 				<span>{name}</span>
 			</NameDivStyle>
-			<UserStatus activeState={activeState} />
+			<UserStatus isActive={isActive} />
 			<UserRole role={role} />
-			<UserEnableButton activeState={activeState} onClick={handleState} />
+			<UserEnableButton isActive={isActive} onClick={handleState} />
 		</UserRowDivStyle>
 	);
 };

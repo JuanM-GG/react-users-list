@@ -8,10 +8,10 @@ const UserEnableButtonStyle = styled.div`
 	align-items: center;
 `;
 
-const UserEnableButton = ({ activeState, onClick }) => {
+const UserEnableButton = ({ isActive, onClick }) => {
 	return (
 		<UserEnableButtonStyle onClick={onClick}>
-			<button>{activeState ? 'Desactivar' : 'Activar'}</button>
+			<button>{isActive ? 'Desactivar' : 'Activar'}</button>
 		</UserEnableButtonStyle>
 	);
 };

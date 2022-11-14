@@ -23,11 +23,7 @@ const users = [
 ];
 
 const App = () => {
-	return (
-		<UsersList users={users}>
-			<h1>Lista de Usuarios</h1>
-		</UsersList>
-	);
+	return <UsersList users={users} />;
 };
 
 export default App;
