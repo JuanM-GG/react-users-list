@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import UserRole from './UserRole';
 import UserStatus from './UserStatus';
-
+import { useState } from 'react';
+import UserEnableButton from './UserEnableButton';
 // Estilos para UserRow
 const UserRowDivStyle = styled.div`
 	display: flex;
@@ -16,20 +17,26 @@ const UserRowDivStyle = styled.div`
 
 // Estilo para name
 const NameDivStyle = styled.div`
-	width: 60%;
+	width: 40%;
 	span {
 		font-weight: bold;
 	}
 `;
 
 const UserRow = ({ name, active, role }) => {
+	const [activeState, setActiveState] = useState(active);
+	const handleState = () => {
+		setActiveState(!activeState);
+	};
+
 	return (
 		<UserRowDivStyle>
 			<NameDivStyle>
 				<span>{name}</span>
 			</NameDivStyle>
-			<UserStatus active={active} />
+			<UserStatus activeState={activeState} />
 			<UserRole role={role} />
+			<UserEnableButton activeState={activeState} onClick={handleState} />
 		</UserRowDivStyle>
 	);
 };

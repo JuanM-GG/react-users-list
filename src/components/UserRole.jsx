@@ -15,13 +15,13 @@ const RoleDivStyle = styled.div`
 	}
 `;
 
-const UserRole = ({ role }) => {
-	const ROLE_STYLES = {
-		teacher: ['Profesor', '#61dafb'],
-		student: ['Alumno', 'lightgreen'],
-		other: ['Otro', 'lightgray']
-	};
+const ROLE_STYLES = {
+	teacher: ['Profesor', '#61dafb'],
+	student: ['Alumno', 'lightgreen'],
+	other: ['Otro', 'lightgray']
+};
 
+const UserRole = ({ role }) => {
 	const [roleName, backgroundColorRole] =
 		ROLE_STYLES[role] || ROLE_STYLES.other;
 	return (

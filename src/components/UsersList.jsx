@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // Estilo para el componente UserList
 const UsersListDivStyle = styled.div`
 	width: 100%;
-	max-width: 500px;
+	max-width: 600px;
 	margin: auto;
 	padding: 1rem;
 `;
@@ -16,7 +16,6 @@ const UsersList = ({ children, users }) => {
 		) : (
 			<p>No hay usuarios</p>
 		);
-
 	return (
 		<UsersListDivStyle>
 			{children}

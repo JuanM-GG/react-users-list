@@ -1,5 +1,6 @@
 import UsersList from './components/UsersList';
 
+// users es global
 const users = [
 	{
 		name: 'Pablo Castellanos',
@@ -21,10 +22,12 @@ const users = [
 	}
 ];
 
-const App = () => (
-	<UsersList users={users}>
-		<h1>Lista de Usuarios</h1>
-	</UsersList>
-);
+const App = () => {
+	return (
+		<UsersList users={users}>
+			<h1>Lista de Usuarios</h1>
+		</UsersList>
+	);
+};
 
 export default App;

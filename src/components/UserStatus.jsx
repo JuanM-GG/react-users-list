@@ -11,10 +11,10 @@ const ActiveDivStyle = styled.div`
 	}
 `;
 
-const UserStatus = ({ active }) => {
+const UserStatus = ({ activeState }) => {
 	return (
-		<ActiveDivStyle active={active}>
-			<span>{active ? 'Activo' : 'Inactivo'}</span>
+		<ActiveDivStyle active={activeState}>
+			<span>{activeState ? 'Activo' : 'Inactivo'}</span>
 		</ActiveDivStyle>
 	);
 };
