@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import UserRole from './UserRole';
 import UserStatus from './UserStatus';
 import UserEnableButton from './UserEnableButton';
+import { useContext } from 'react';
+import { UsersContext } from '../lib/context/UsersContext';
 // Estilos para UserRow
 const UserRowDivStyle = styled.div`
 	display: flex;
@@ -22,7 +24,9 @@ const NameDivStyle = styled.div`
 	}
 `;
 
-const UserRow = ({ name, active, role, id, handleUsers }) => {
+const UserRow = ({ name, active, role, id }) => {
+	const { toggleUserActive } = useContext(UsersContext);
+
 	return (
 		<UserRowDivStyle>
 			<NameDivStyle>
@@ -30,7 +34,10 @@ const UserRow = ({ name, active, role, id, handleUsers }) => {
 			</NameDivStyle>
 			<UserStatus isActive={active} />
 			<UserRole role={role} />
-			<UserEnableButton isActive={active} onClick={() => handleUsers(id)} />
+			<UserEnableButton
+				isActive={active}
+				onClick={() => toggleUserActive(id)}
+			/>
 		</UserRowDivStyle>
 	);
 };

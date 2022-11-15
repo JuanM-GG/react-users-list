@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import UsersListFilters from './UsersListFilters';
 import UsersListRows from './UsersListRows';
-
+import { UsersContext } from '../lib/context/UsersContext';
 // Estilo para el componente UserList
 const UsersListDivStyle = styled.div`
 	width: 100%;
@@ -37,7 +37,9 @@ const UsersList = ({ initialUsers }) => {
 			{/* Formulario */}
 			<UsersListFilters handleFilters={handleFilters} />
 			{/* Componentes UserRow renderizados */}
-			<UsersListRows users={usersFiltered} handleUsers={toggleUserActive} />
+			<UsersContext.Provider value={{ toggleUserActive }}>
+				<UsersListRows users={usersFiltered} />
+			</UsersContext.Provider>
 		</UsersListDivStyle>
 	);
 };
