@@ -15,24 +15,15 @@ const UsersList = ({ initialUsers }) => {
 	// Custom Hook
 	// Crear el estado filters y destructurar sus componentes y su setState
 	const { search, onlyActive, sortBy, setFilters } = useFilters();
-	// Estado para guardar los usuarios
-	const [users, setUsers] = useState(initialUsers);
 
 	// Cambiar los filtros
 	const handleFilters = (search, onlyActive, sortBy) => {
 		setFilters({ search, onlyActive, sortBy });
 	};
 
-	// Cambiar el estado activo del usuario
-	const toggleUserActive = userId => {
-		const newUsers = users.map(user => {
-			if (user.id === userId) {
-				user.active = !user.active;
-			}
-			return user;
-		});
-		setUsers(newUsers);
-	};
+	// Custom Hook
+	// Crear el estado users y su toggleUserActive
+	const { users, toggleUserActive } = useUsers(initialUsers);
 
 	// Filtrar usuarios activos
 	let usersFiltered = filterActiveUsers(users, onlyActive);
@@ -61,6 +52,26 @@ const useFilters = () => {
 	return {
 		...filters,
 		setFilters
+	};
+};
+
+const useUsers = initialUsers => {
+	// Estado para guardar los usuarios
+	const [users, setUsers] = useState(initialUsers);
+	// Cambiar el estado activo del usuario
+	const toggleUserActive = userId => {
+		const newUsers = users.map(user => {
+			if (user.id === userId) {
+				user.active = !user.active;
+			}
+			return user;
+		});
+		setUsers(newUsers);
+	};
+
+	return {
+		users,
+		toggleUserActive
 	};
 };
 
