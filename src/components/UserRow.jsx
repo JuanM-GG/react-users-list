@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import UserRole from './UserRole';
 import UserStatus from './UserStatus';
-import { useState } from 'react';
 import UserEnableButton from './UserEnableButton';
 // Estilos para UserRow
 const UserRowDivStyle = styled.div`
@@ -23,20 +22,15 @@ const NameDivStyle = styled.div`
 	}
 `;
 
-const UserRow = ({ name, active, role }) => {
-	const [isActive, setIsActive] = useState(active);
-	const handleState = () => {
-		setIsActive(!isActive);
-	};
-
+const UserRow = ({ name, active, role, id, handleUsers }) => {
 	return (
 		<UserRowDivStyle>
 			<NameDivStyle>
 				<span>{name}</span>
 			</NameDivStyle>
-			<UserStatus isActive={isActive} />
+			<UserStatus isActive={active} />
 			<UserRole role={role} />
-			<UserEnableButton isActive={isActive} onClick={handleState} />
+			<UserEnableButton isActive={active} onClick={() => handleUsers(id)} />
 		</UserRowDivStyle>
 	);
 };

@@ -23,7 +23,7 @@ const users = [
 ];
 
 const App = () => {
-	return <UsersList users={users} />;
+	return <UsersList initialUsers={users} />;
 };
 
 export default App;
