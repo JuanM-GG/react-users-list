@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-// Estilo para UserStatus
+// Estilo para el componente completo ////////////////////////////////////
 const ActiveDivStyle = styled.div`
 	width: 20%;
 	display: flex;
@@ -11,9 +11,15 @@ const ActiveDivStyle = styled.div`
 	}
 `;
 
+// Componente /////////////////////////////////////////////////////////////
 const UserStatus = ({ isActive }) => {
+
+	// ESTO SE EJECUTA CADA VEZ QUE SE RENDERIZA EL COMPONENTE
+
+	// Parte 1. HTML que se renderiza en UserRow
 	return (
-		<ActiveDivStyle active={isActive}>
+		// Los estiloas tambien pueden recibir props!
+		<ActiveDivStyle active={isActive}> 
 			<span>{isActive ? 'Activo' : 'Inactivo'}</span>
 		</ActiveDivStyle>
 	);

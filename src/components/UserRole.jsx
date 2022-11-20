@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-// Estilo para UserRole
+// Estilo para UserRole /////////////////////////////////////
 const RoleDivStyle = styled.div`
 	width: 20%;
 	display: flex;
@@ -15,20 +15,34 @@ const RoleDivStyle = styled.div`
 	}
 `;
 
-const ROLE_STYLES = {
-	teacher: ['Profesor', '#61dafb'],
-	student: ['Alumno', 'lightgreen'],
-	other: ['Otro', 'lightgray']
-};
-
+// Componente //////////////////////////////////////////////////////
 const UserRole = ({ role }) => {
-	const [roleName, backgroundColorRole] =
-		ROLE_STYLES[role] || ROLE_STYLES.other;
+
+	// ESTO SE EJECUTA CADA VEZ QUE SE RENDERIZA EL COMPONENTE
+
+	// Parte 1.  Funciones que se llaman en cada renderizado
+	const [roleName, backgroundColorRole] = getStyle(role);
+	
+	// Parte 2. HTML que se renderiza en UserRow
 	return (
+		// Los estilos tambien pueden recibir props!
 		<RoleDivStyle backgroundColorRole={backgroundColorRole}>
+			{/* Se usa span y no p porque span no ocupa TODO el renglon */}
 			<span>{roleName}</span>
 		</RoleDivStyle>
 	);
 };
+
+// Parte 3. Declarar funciones 	que se usan en el componente
+const getStyle = (role) => {
+	// Crear un objeto que mapea el rol a rol en espanol y background
+	const ROLE_STYLES = {
+		teacher: ['Profesor', '#61dafb'],
+		student: ['Alumno', 'lightgreen'],
+		other: ['Otro', 'lightgray']
+	};
+	// Trata de recordar esta sintaxis
+	return ROLE_STYLES[role] || ROLE_STYLES.other
+}
 
 export default UserRole;

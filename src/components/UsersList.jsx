@@ -3,7 +3,9 @@ import { useState } from 'react';
 import UsersListFilters from './UsersListFilters';
 import UsersListRows from './UsersListRows';
 import { UsersContext } from '../lib/context/UsersContext';
-// Estilo para el componente UserList
+
+// Estilos para el componente /////////////////////////////////////////////////////////
+// Estilo para el componente completo
 const UsersListDivStyle = styled.div`
 	width: 100%;
 	max-width: 800px;
@@ -11,38 +13,42 @@ const UsersListDivStyle = styled.div`
 	padding: 1rem;
 `;
 
+// Componente ///////////////////////////////////////////////////////////////////////
 const UsersList = ({ initialUsers }) => {
-	// Custom Hook
-	// Crear el estado filters y destructurar sus componentes y su setState
-	const { search, onlyActive, sortBy, setFilters } = useFilters();
 
-	// Cambiar los filtros
-	const handleFilters = (search, onlyActive, sortBy) => {
-		setFilters({ search, onlyActive, sortBy });
-	};
-
-	// Custom Hook
-	// Crear el estado users y su toggleUserActive
+	// Parte 1. Declarar todos los hooks a usar en el componente
+	// Crear el estado filters y destructurar sus componentes y su handleFilters mediante un custom hook
+	const { search, onlyActive, sortBy, handleFilters } = useFilters();
+	// // Crear el estado users y su toggleUserActive mediante un custom hook
 	const { users, toggleUserActive } = useUsers(initialUsers);
 
-	// Filtrar usuarios activos
-	let usersFiltered = filterActiveUsers(users, onlyActive);
-	// Filtrar usuarios por nombre
-	usersFiltered = filterUsersByName(usersFiltered, search);
-	// Ordenar usuarios
+	// ESTO SE EJECUTA CADA VEZ QUE SE RENDERIZA EL COMPONENTE
+
+	// Parte 2. Crear las funciones que van a ser llamadas en cada renderizado
+	// 1. Filtrar usuarios por nombre
+	let usersFiltered = filterUsersByName(users, search);
+	// 2. Filtrar usuarios activos
+	usersFiltered = filterActiveUsers(usersFiltered, onlyActive);
+	// 3. Ordenar usuarios
 	usersFiltered = sortUsers(usersFiltered, sortBy);
+	
+	// Parte 3. Crear el HTML que se va a renderizar en App
 	return (
-		<UsersListDivStyle>
-			<h1>Listado de Usuarios</h1>
-			{/* Formulario */}
-			<UsersListFilters handleFilters={handleFilters} />
-			{/* Componentes UserRow renderizados */}
-			<UsersContext.Provider value={{ toggleUserActive }}>
+		<UsersListDivStyle> {/* Un estilo para todo el componente */}
+			{/* Hijo 1. Etiqueta h1 */}
+			<h1>Listado de Usuarios</h1> 
+			{/* Hijo 2. Componente que filtra a los usuarios */}
+			<UsersListFilters handleFilters={handleFilters} /> {/* Recibe la funcion que va a actualizar el estado filters */}
+			{/* Usamos un UseContext para pasar la funcion toggleUserActive a UserStatus */}
+			<UsersContext.Provider value={{ toggleUserActive }}> {/* Recibe la funcion que va a actualizar la lista de usuarios como un valor de Context */}
+				{/* Hijo 3. Componente que muestra a los usuarios */}
 				<UsersListRows users={usersFiltered} />
 			</UsersContext.Provider>
 		</UsersListDivStyle>
 	);
 };
+
+// Parte 4. Crear las funciones que generan los custom hooks
 // Función para crear estado filter y su setState
 const useFilters = () => {
 	const [filters, setFilters] = useState({
@@ -50,13 +56,16 @@ const useFilters = () => {
 		onlyActive: false,
 		sortBy: 0
 	});
+	const handleFilters = (search, onlyActive, sortBy) => {
+		setFilters({ search, onlyActive, sortBy });
+	};
 
 	return {
 		...filters,
-		setFilters
+		handleFilters
 	};
 };
-
+// Funcion para crear estado users y su toggleActiveUsers 
 const useUsers = initialUsers => {
 	// Estado para guardar los usuarios
 	const [users, setUsers] = useState(initialUsers);
@@ -66,7 +75,7 @@ const useUsers = initialUsers => {
 			if (user.id === userId) {
 				user.active = !user.active;
 			}
-			return user;
+			return user; // Con map SIEMPRE HAY UN RETURN
 		});
 		setUsers(newUsers);
 	};
@@ -76,12 +85,12 @@ const useUsers = initialUsers => {
 		toggleUserActive
 	};
 };
-
-// Función para filtrar por nombre
+// Parte 5. Crear las funciones que manipulan los estados
+// Funcion para filtrar usuarios por nombre
 const filterUsersByName = (users, search) => {
 	// Si no hay nombre para buscar, regresa todos los usuarios
+	// Regresamos una copia para tener una funcion pura
 	if (!search) return [...users];
-
 	// Pasa el nombre a buscar a minusculas
 	const lowerCaseSearch = search.toLowerCase();
 	// Filtra los usuarios con el nombre de busqueda
